@@ -9,7 +9,7 @@ import time
 # -----------------------------
 def get_connection():
     return mysql.connector.connect(
-        host="localhost",
+        host="192.168.1.4",
         user="root",
         password="",       # empty if using XAMPP default
         database="kafka_db",
@@ -113,3 +113,4 @@ st.plotly_chart(fig_day, use_container_width=True)
 # -----------------------------
 time.sleep(refresh_rate)
 st.rerun()
+
