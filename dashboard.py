@@ -87,18 +87,18 @@ st.plotly_chart(fig_city, use_container_width=True)
 
 # Top products
 product_df = load_data("""
-SELECT product, SUM(quantity) AS units
+SELECT product_name, SUM(quantity) AS units
 FROM sales_events
-GROUP BY product
+GROUP BY product_name
 ORDER BY units DESC
 """)
 
-fig_product = px.bar(product_df, x="product", y="units", title="📦 Best Selling Products")
+fig_product = px.bar(product_df, x="product_name", y="units", title="📦 Best Selling Products")
 st.plotly_chart(fig_product, use_container_width=True)
 
 # Peak hour
 hour_df = load_data("""
-SELECT HOUR(event_time) AS hour, SUM(net_amount) AS revenue
+SELECT order_hour AS hour, SUM(net_amount) AS revenue
 FROM sales_events
 GROUP BY hour
 ORDER BY hour
@@ -109,7 +109,7 @@ st.plotly_chart(fig_hour, use_container_width=True)
 
 # Best day
 day_df = load_data("""
-SELECT DAYNAME(event_time) AS day, SUM(net_amount) AS revenue
+SELECT order_day AS day, SUM(net_amount) AS revenue
 FROM sales_events
 GROUP BY day
 ORDER BY revenue DESC
@@ -127,6 +127,7 @@ st.plotly_chart(fig_day, use_container_width=True)
 from streamlit_autorefresh import st_autorefresh
 
 st_autorefresh(interval=5000, key="datarefresh")
+
 
 
 
