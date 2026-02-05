@@ -5,3 +5,5 @@ plotly
 requests
 sqlalchemy
 pymysql
+streamlit_autorefresh 
+
