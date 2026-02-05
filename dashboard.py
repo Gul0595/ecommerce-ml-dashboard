@@ -48,7 +48,7 @@ st.caption(f"Auto-refresh every {refresh_rate} seconds")
 # -----------------------------
 kpi_query = """
 SELECT
-  COALESCE(SUM(price * quantity), 0) AS revenue,
+  COALESCE(SUM(net_amount), 0) AS revenue,
   COALESCE(SUM(quantity), 0) AS units,
   COUNT(*) AS orders
 FROM sales_events;
@@ -73,7 +73,7 @@ st.divider()
 
 # Top cities
 city_df = load_data("""
-SELECT city, SUM(total_price) AS revenue
+SELECT city, SUM(net_amount) AS revenue
 FROM sales_events
 GROUP BY city
 ORDER BY revenue DESC
@@ -95,7 +95,7 @@ st.plotly_chart(fig_product, use_container_width=True)
 
 # Peak hour
 hour_df = load_data("""
-SELECT HOUR(event_time) AS hour, SUM(total_price) AS revenue
+SELECT HOUR(event_time) AS hour, SUM(net_amount) AS revenue
 FROM sales_events
 GROUP BY hour
 ORDER BY hour
@@ -106,7 +106,7 @@ st.plotly_chart(fig_hour, use_container_width=True)
 
 # Best day
 day_df = load_data("""
-SELECT DAYNAME(event_time) AS day, SUM(total_price) AS revenue
+SELECT DAYNAME(event_time) AS day, SUM(net_amount) AS revenue
 FROM sales_events
 GROUP BY day
 ORDER BY revenue DESC
@@ -120,6 +120,7 @@ st.plotly_chart(fig_day, use_container_width=True)
 # -----------------------------
 time.sleep(refresh_rate)
 st.rerun()
+
 
 
 
