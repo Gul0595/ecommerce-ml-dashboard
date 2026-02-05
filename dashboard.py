@@ -19,10 +19,17 @@ def get_connection():
 # -----------------------------
 # Load data
 # -----------------------------
+from sqlalchemy import create_engine
+import pandas as pd
+
+def get_engine():
+    return create_engine(
+        "mysql+pymysql://root:qXFFWJWhuTIPBdFPgLjHNFXDGUSTwbPC@gondola.proxy.rlwy.net:34879/railway"
+    )
+
 def load_data(query):
-    conn = get_connection()
-    df = pd.read_sql(query, conn)
-    conn.close()
+    engine = get_engine()
+    df = pd.read_sql(query, engine)
     return df
 
 # -----------------------------
@@ -113,5 +120,6 @@ st.plotly_chart(fig_day, use_container_width=True)
 # -----------------------------
 time.sleep(refresh_rate)
 st.rerun()
+
 
 
