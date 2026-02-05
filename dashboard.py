@@ -22,11 +22,14 @@ def get_connection():
 from sqlalchemy import create_engine
 import pandas as pd
 
+@st.cache_resource
 def get_engine():
     return create_engine(
-        "mysql+pymysql://root:qXFFWJWhuTIPBdFPgLjHNFXDGUSTwbPC@gondola.proxy.rlwy.net:34879/railway"
+        "mysql+pymysql://root:qXFFWJWhuTIPBdFPgLjHNFXDGUSTwbPC@gondola.proxy.rlwy.net:34879/railway",
+        pool_pre_ping=True
     )
 
+@st.cache_data(ttl=5)
 def load_data(query):
     engine = get_engine()
     df = pd.read_sql(query, engine)
@@ -118,8 +121,13 @@ st.plotly_chart(fig_day, use_container_width=True)
 # -----------------------------
 # Auto refresh
 # -----------------------------
-time.sleep(refresh_rate)
-st.rerun()
+# time.sleep(refresh_rate)
+# st.rerun()
+
+from streamlit_autorefresh import st_autorefresh
+
+st_autorefresh(interval=5000, key="datarefresh")
+
 
 
 
