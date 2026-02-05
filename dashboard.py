@@ -9,11 +9,11 @@ import time
 # -----------------------------
 def get_connection():
     return mysql.connector.connect(
-        host="192.168.1.4",
+        host="gondola.proxy.rlwy.net",
         user="root",
-        password="",       # empty if using XAMPP default
-        database="kafka_db",
-        port= 3307
+        password="qXFFWJWhuTIPBdFPgLjHNFXDGUSTwbPC",
+        database="railway",
+        port=34879
     )
 
 # -----------------------------
@@ -113,4 +113,5 @@ st.plotly_chart(fig_day, use_container_width=True)
 # -----------------------------
 time.sleep(refresh_rate)
 st.rerun()
+
 
