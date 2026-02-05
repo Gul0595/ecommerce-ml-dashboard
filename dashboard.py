@@ -51,7 +51,7 @@ SELECT
   COALESCE(SUM(price * quantity), 0) AS revenue,
   COALESCE(SUM(quantity), 0) AS units,
   COUNT(*) AS orders
-FROM sales;
+FROM sales_events;
 """
 kpi = load_data(kpi_query)
 
@@ -120,6 +120,7 @@ st.plotly_chart(fig_day, use_container_width=True)
 # -----------------------------
 time.sleep(refresh_rate)
 st.rerun()
+
 
 
 
